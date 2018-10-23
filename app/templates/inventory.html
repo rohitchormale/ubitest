@@ -1,0 +1,40 @@
+{% from "_formhelpers.html" import render_field %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory</title>
+</head>
+<body>
+
+<h2> Add Inventory</h2>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<form method="post" action="/inventory/addInventory">
+    {{ form.csrf_token }}
+    <dl>
+        {{ render_field(form.name) }}
+        {{ render_field(form.points) }}
+    </dl>
+    <p><input type="submit" value="Add Inventory"></p>
+</form>
+
+<hr>
+<h2>Available Inventory</h2>
+   {% for i in inventory %}
+       <p> {{ i.name }} - {{ i.points }}
+   {% endfor %}
+
+<hr>
+<a href="/inventory/dashboard">Dashboard</a>
+
+</body>
+</html>

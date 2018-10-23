@@ -1,0 +1,39 @@
+{% from "_formhelpers.html" import render_field %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Points</title>
+</head>
+<body>
+
+
+<h2> Purchase Points </h2>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<form method="post" action="/inventory/purchasePoints">
+    {{ form.csrf_token }}
+    <dl>
+        {{ render_field(form.points) }}
+    </dl>
+    <p><input type="submit" value="Purchase"></p>
+</form>
+
+<hr>
+<h2>Current Points</h2>
+    <p>Free Points - {{ current_user.free_points }} </p>
+    <p>Purchased Points - {{ current_user.purchased_points }}</p>
+
+<hr>
+<a href="/inventory/dashboard">Dashboard</a>
+
+</body>
+</html>
+

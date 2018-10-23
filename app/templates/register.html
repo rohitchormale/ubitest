@@ -1,0 +1,37 @@
+{% from "_formhelpers.html" import render_field %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+
+<h3> Registration </h3>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+<form method="post" action="/user/register">
+    {{ form.csrf_token }}
+  <dl>
+    {{ render_field(form.first_name) }}
+    {{ render_field(form.last_name) }}
+    {{ render_field(form.username) }}
+    {{ render_field(form.password) }}
+  </dl>
+  <p><input type=submit value=Register>
+    <a href="/user/login">Already registered?</a>
+</form>
+
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h1>Dashboard</h1>
+<p>Welcome {{ user.first_name }}</p>
+
+<hr>
+<h2> Your Points </h2>
+<a href="/inventory/purchasePoints"> Purchase Points</a>
+<p>Free Points - {{ user.free_points }}
+<p>Purchased Points- {{ user.purchased_points }}
+
+<hr>
+<h2>Your Items</h2>
+<a href="/inventory/purchaseItem"> Purchase Item</a>
+<p>
+{% for i in inventory %}
+    <p>
+    {{ i }} - {{ inventory[i] }}
+{% endfor %}
+</p>
+
+<hr>
+<h2> Transactions </h2>
+<a href="/inventory/getTransactions">Transactions History</a>
+<hr>
+{% if user.admin %}
+<h2> Admin Options</h2>
+<a href="/inventory/addInventory"> Manage Inventory Store</a>
+{% endif %}
+
+<hr>
+<p><a href='logout'>Logout</a>
+
+</body>
+</html>
