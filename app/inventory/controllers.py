@@ -156,7 +156,7 @@ def get_transactions():
     offset = request.args.get("offset", None)
     limit = request.args.get("limit", None)
     if offset is None or limit is None:
-        transactions = Transaction.objects(user=current_user._get_current_object())
+        transactions = Transaction.objects(user=current_user._get_current_object()).order_by("-timestamp")
         return jsonify(transactions), 200
-    transactions = Transaction.objects(user=current_user._get_current_object()).skip(int(offset)).limit(int(limit))
+    transactions = Transaction.objects(user=current_user._get_current_object()).skip(int(offset)).limit(int(limit)).order_by("-timestamp")
     return jsonify(transactions), 200
