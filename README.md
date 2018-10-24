@@ -5,11 +5,11 @@
 
 ### mongodb
 - `apt install mongodb`
-- On install mongodb will start automatically. If not then run command `systemctl start mongodb`
+- On finishing installation, mongodb will start automatically. If it doesn't,  then start it explicitly by `systemctl start mongodb`
 
 
 ### Restrict access to specific ips
-- open 27017 port on mongodb-server, for <webserver-ip> if webserver hosted on another machine. `sudo ufw allow from <webserver-ip>/32 to any port 27017`
+- Only allow requests from webserver on port 27017 `sudo ufw allow from <webserver-ip>/32 to any port 27017`
 - If webapp is on another server, instead running mongodb on all interface, restrict to private ip only by editing
     `/etc/mongodb.conf`, set value of `bind_ip` to both ips as `bind_ip = 127.0.0.1,<private-ip>`
 
@@ -46,9 +46,9 @@
 
 
 ## Usage
-- Development server can be started as `python run.py` assuming you're in project root directory
 - FreePoints Credit service can be run using `bin/fpcservice.sh` assuming you're in project root directory
 - Run this service via crontab as `* * * * * <project-root-dir>/bin/fpcservice.sh > /dev/null`
+- Development server can be started as `python run.py` assuming you're in project root directory
 - Do NOT use development server for production development.
 
 
@@ -192,7 +192,6 @@
     Add new items in inventory to purchase
     Only admin can call it
     ```
-
 
 
 ## Notes
