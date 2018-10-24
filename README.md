@@ -31,3 +31,11 @@ apt-get install mongodb
 ## API Reference
 
 
+## Notes
+- User can buy same item multiple times. All items will be tracked separately.
+- As transaction data can become huge later, it is kept separate in another collection.
+- freepoints credit service is enabled for user, at 2 events
+    - after registration
+    - when free points go down below `FP_CREDIT_MAX_POINTS`(here 200) during purchase
+
+
