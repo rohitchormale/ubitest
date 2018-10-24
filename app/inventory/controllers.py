@@ -152,5 +152,11 @@ def add_inventory():
 
 @login_required
 def get_transactions():
-    """Return all transactions of users"""
-    return '<h2> Coming soon !!!</h2>'
+    """Return transactions of users"""
+    offset = request.args.get("offset", None)
+    limit = request.args.get("limit", None)
+    if offset is None or limit is None:
+        transactions = Transaction.objects(user=current_user._get_current_object())
+        return jsonify(transactions), 200
+    transactions = Transaction.objects(user=current_user._get_current_object()).skip(int(offset)).limit(int(limit))
+    return jsonify(transactions), 200
