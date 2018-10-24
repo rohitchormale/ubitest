@@ -62,6 +62,7 @@
     Sample Response -
     {
       "free_points": 0,
+      "purchased_points": 50,
       "inventory_aggregate": {
         "healing potion": 1,
         "notebook": 1,
@@ -90,7 +91,6 @@
           "points": 300
         }
       ],
-      "purchased_points": 50
     }
     ```
 
@@ -111,7 +111,7 @@
     Purchase points. For testing only
     ```
 
-- /inventory/getItems
+- /inventory/getItems or /inventory/getItems?offset=7&limit=2
     ```
     /GET
     Returns all items purchased by/credited to user
@@ -140,11 +140,34 @@
     Purchase one of the item from inventory
     ```
 
+ - /inventory/getTransactions or /inventory/getTransactions?offset=5&limit=5
+    ```
+    /GET
+    Returns transactions of given user
+    Sample Response -
+    [
+      {
+        "_id": {
+          "$oid": "5bcf98780aadd461c29a5670"
+        },
+        "description": "Purchased notebook",
+        "points": 0,
+        "timestamp": {
+          "$date": 1540351440658
+        },
+        "trans_id": "2b1f33d5-7f2f-42cd-9e7f-fa10750f185d",
+        "trans_type": "FP",
+        "user": {
+          "$oid": "5bcf28240aadd47fd98156e2"
+        }
+      }
+    ```
+
 - /inventory/getInventory
     ```
     /GET
     Returns all items available to purchase
-    Sample -
+    Sample Response-
     [
       {
         "_id": {
@@ -174,7 +197,8 @@
 
 ## Notes
 - User can buy same item multiple times. All items will be tracked separately.
-- As transaction data can become huge later, it is kept separate in another collection.
+- As transaction data can become huge later, it is separated in another collection.
+- Minimum cost of item can be 0.
 - freepoints credit service is enabled for user, at 2 events
     - after registration
     - when free points go down below `FP_CREDIT_MAX_POINTS`(here 200) during purchase
