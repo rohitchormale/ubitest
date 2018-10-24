@@ -28,7 +28,51 @@ apt-get install mongodb
 
 
 
-## API Reference
+## API References
+
+- /inventory/connect/
+    ```
+    /GET
+    Returns user's account info like free_points, purchased_points, inventory_list etc
+    ```
+
+- /inventory/getPoints
+    ```
+    /GET
+    Returns user's free points and purchased points
+    ```
+
+- /inventory/purchasePoints
+    ```
+    /POST
+    Purchase points. For testing only
+    ```
+
+- /inventory/getItems
+    ```
+    /GET
+    Returns all items purchased by/credited to user
+    ```
+
+- /inventory/purchaseItem
+    ```
+    /POST
+    Purchase one of the item from inventory
+    ```
+
+- /inventory/getInventory
+    ````
+    /GET
+    Returns all items available to purchase
+    ```
+
+- /inventory/addInventory
+    ```
+    /POST
+    Add new items in inventory to purchase
+    Only admin can call it
+    ```
+
 
 
 ## Notes
