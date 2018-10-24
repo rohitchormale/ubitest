@@ -1,10 +1,10 @@
 # ubitest v0.1
 
-## Installation (Tested on Linux Mint 19)
+## Installation (Tested on Linux Mint 19/Ubuntu 18)
 
 
 ### mongodb
-- `apt-get install mongodb`
+- `apt install mongodb`
 - On install mongodb will start automatically. If not then run command `systemctl start mongodb`
 
 
@@ -33,7 +33,7 @@
 
 
 ### flask package
-- `apt-get install python3-pip`
+- `apt install python3-pip`
 - `pip3 install -r requirements.txt`
 
 
@@ -59,12 +59,50 @@
     ```
     /GET
     Returns user's account info like free_points, purchased_points, inventory_list etc
+    Sample Response -
+    {
+      "free_points": 0,
+      "inventory_aggregate": {
+        "healing potion": 1,
+        "notebook": 1,
+        "sentry": 1
+      },
+      "inventory_list": [
+        {
+          "_id": {
+            "$oid": "5bd08a0d9c22ac8142abc759"
+          },
+          "name": "healing potion",
+          "points": 100
+        },
+        {
+          "_id": {
+            "$oid": "5bd08a839c22ac8142abc796"
+          },
+          "name": "notebook",
+          "points": 0
+        },
+        {
+          "_id": {
+            "$oid": "5bd08aa09c22ac8142abc7a7"
+          },
+          "name": "sentry",
+          "points": 300
+        }
+      ],
+      "purchased_points": 50
+    }
     ```
 
 - /inventory/getPoints
     ```
     /GET
     Returns user's free points and purchased points
+    Sample Response -
+    {
+      "free_points": 0,
+      "purchased_points": 50
+    }
     ```
 
 - /inventory/purchasePoints
@@ -77,6 +115,23 @@
     ```
     /GET
     Returns all items purchased by/credited to user
+    Sample Response -
+    [
+      {
+        "_id": {
+          "$oid": "5bd08a0d9c22ac8142abc759"
+        },
+        "name": "healing potion",
+        "points": 100
+      },
+      {
+        "_id": {
+          "$oid": "5bd08a839c22ac8142abc796"
+        },
+        "name": "notebook",
+        "points": 0
+      },
+    ]
     ```
 
 - /inventory/purchaseItem
@@ -89,6 +144,23 @@
     ```
     /GET
     Returns all items available to purchase
+    Sample -
+    [
+      {
+        "_id": {
+          "$oid": "5bd08a0d9c22ac8142abc759"
+        },
+        "name": "healing potion",
+        "points": 100
+      },
+      {
+        "_id": {
+          "$oid": "5bd08a839c22ac8142abc796"
+        },
+        "name": "notebook",
+        "points": 0
+      },
+    ]
     ```
 
 - /inventory/addInventory
