@@ -51,7 +51,9 @@ def main():
         except Exception as e:
             app.logger.error("Error in FreeCredit Service")
         app.logger.info("%s Free Points credited to %s" %(credit_points, fp.user.username))
+    app.logger.info("[*] Service finished !!!")
 
 
 if __name__ == "__main__":
+    app.logger.info("[*] Service started...")
     main()

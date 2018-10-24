@@ -47,8 +47,8 @@
 
 ## Usage
 - Development server can be started as `python run.py` assuming you're in project root directory
-- FreePoints Credit service can be run using `bin/fcpservice.sh` assuming you're in project root directory
-- Run this service via crontab as `* * * * * <project-root-dir>/bin/fcpservice.sh > /dev/null`
+- FreePoints Credit service can be run using `bin/fpcservice.sh` assuming you're in project root directory
+- Run this service via crontab as `* * * * * <project-root-dir>/bin/fpcservice.sh > /dev/null`
 - Do NOT use development server for production development.
 
 

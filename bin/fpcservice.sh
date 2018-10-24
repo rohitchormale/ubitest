@@ -1,6 +1,6 @@
 #!/bin/bash
 
-interpreter=/usr/bin/env python3
+interpreter=`which python3`
 lockfile=/tmp/fpcservice.lock
 prgfile=fpcservice.py
 prgpath=`realpath $0`
