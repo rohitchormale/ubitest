@@ -1,3 +1,10 @@
+"""
+This module implements Inventory related models.
+
+@author: Rohit Chormale
+"""
+
+
 from app import db
 
 

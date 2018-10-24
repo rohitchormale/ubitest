@@ -1,3 +1,8 @@
+"""
+This module implements User related models
+
+@author: Rohit Chormale
+"""
 from flask_login import UserMixin
 from app import db
 

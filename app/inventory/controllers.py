@@ -1,3 +1,10 @@
+"""
+This module implements various controllers related with inventory apis
+
+@author: Rohit Chormale
+"""
+
+
 import datetime
 from flask import render_template, jsonify, request, flash
 from flask_login import current_user, login_required

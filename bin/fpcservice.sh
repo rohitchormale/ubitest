@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# configure file paths
 interpreter=/usr/bin/env python3
 lockfile=/tmp/fpcservice.lock
 prgfile=fpcservice.py

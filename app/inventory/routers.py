@@ -1,7 +1,7 @@
 """
-Routes -
+This module implements various blueprints and routers for different controllers related with inventory management.
 
-Configure blueprint and routes for different controllers in app
+@author: Rohit Chormale
 """
 
 

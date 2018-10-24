@@ -1,3 +1,9 @@
+"""
+This module implements various forms related with inventory.
+
+@author: Rohit Chormale
+"""
+
 from flask_wtf.form import FlaskForm
 from wtforms import StringField, IntegerField
 from wtforms.validators import InputRequired, Length, NumberRange

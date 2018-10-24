@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-FreePoints Credit Service
+FreePoints Credit Service. This service credits user free points as per configuration. Configuration can be found at `config.py'.
 
 Do NOT run this script directly. Instead use singleton script `bin/fpcservice.sh`
 

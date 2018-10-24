@@ -1,3 +1,10 @@
+"""
+This module implements various controllers related with user authentication.
+
+@author: Rohit Chormale
+"""
+
+
 from flask import request, render_template, redirect, flash, session, url_for
 from mongoengine.errors import NotUniqueError
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,6 +16,7 @@ from .models import *
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Load user object from database to manage sessions"""
     return User.objects(pk=user_id).first()
 
 

@@ -1,5 +1,7 @@
 """
-This module implements helper functions.
+This module implements helper functions used in web service.
+
+@author: Rohit Chormale
 """
 
 

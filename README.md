@@ -7,8 +7,8 @@
 apt-get install mongodb
 
 ### flask package
-apt-get install python3-pip
-pip3 install -r requirements.txt
+- `apt-get install python3-pip`
+- `pip3 install -r requirements.txt`
 
 
 ## Configuration
@@ -16,7 +16,7 @@ pip3 install -r requirements.txt
 ### mongodb
 - open 27017 port on mongodb-server, for webserver-ip if webserver hosted on another machine. `sudo ufw allow from <webserver-ip>/32 to any port 27017`
 
-### ubitest packate
+### flask package
 - Add confidential config in `instance/config.py`. Do not commit this file. Common config can be ketp at `config.py`
 
 

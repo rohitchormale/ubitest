@@ -1,3 +1,9 @@
+"""
+This module implements various forms related with user registration and authentication
+
+@author: Rohit Chormale
+"""
+
 from flask_wtf.form import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import Email, Length, InputRequired
