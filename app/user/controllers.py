@@ -5,10 +5,13 @@ This module implements various controllers related with user authentication.
 """
 
 
+import datetime
 from flask import request, render_template, redirect, flash, session, url_for
+from app.inventory.models import FPCredit
 from mongoengine.errors import NotUniqueError
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import login_manager
+from app import app
 from flask_login import current_user, login_user, login_required, logout_user
 from .forms import *
 from .models import *
@@ -27,7 +30,8 @@ def unauthorized_callback():
 
 
 def register():
-    """Handle registration request"""
+    """Handle registration request.
+    After successful registration, take user to dashboard immediately. Also start free point credit service immediately by adding entry in `FPCredit"""
     form = RegisterForm(request.form)
     if request.method == "POST" and form.validate():
         password = generate_password_hash(form.password.data, method="sha256")
@@ -37,7 +41,12 @@ def register():
             key = str(e).split("index: ")[-1].split("_")[0]
             flash("%s already exists" % key.title())
             return render_template("register.html", form=form)
+        # take user in
         login_user(user)
+        # start free-points credit service
+        if current_user.free_points < int(app.config["FP_CREDIT_MAX_POINTS"]) and FPCredit.objects(user=current_user._get_current_object()).first() is None:
+                fp_credit = FPCredit(user=current_user._get_current_object(), timestamp=datetime.datetime.now())
+                fp_credit.save()
         return redirect(url_for("inventory.dashboard"))
     return render_template("register.html", form=form)
 
