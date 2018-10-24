@@ -1,5 +1,5 @@
 .idea/*
 instance/*
 __pycache__/*
-*log*
+*.log*
 *pyc

@@ -4,7 +4,33 @@
 
 
 ### mongodb
-apt-get install mongodb
+- `apt-get install mongodb`
+- On install mongodb will start automatically. If not then run command `systemctl start mongodb`
+
+
+### Restrict access to specific ips
+- open 27017 port on mongodb-server, for <webserver-ip> if webserver hosted on another machine. `sudo ufw allow from <webserver-ip>/32 to any port 27017`
+- If webapp is on another server, instead running mongodb on all interface, restrict to private ip only by editing
+    `/etc/mongodb.conf`, set value of `bind_ip` to both ips as `bind_ip = 127.0.0.1,<private-ip>`
+
+
+### Secure access to mongodb using username and password
+- Edit `/etc/mongodb.conf` and set value of `auth = True`
+- Now connect to mongodb using command line client and execute below commands
+
+    ```
+    use <dbname>
+    db.createUser({ user: "<dbuser>", pwd: "<dbpasswrd", roles: [ { role: "readWrite", db: "<dbname>" }, { role: "dbAdmin", db: "<dbname>" } ] })
+    ```
+- Test your connection
+
+    ```
+    use <dbname>
+    db.auth("<dbuser>", "<dbpasswrd>")
+    ```
+- Now exit from mongo-client and restart db as `systemctl mongodb restart`.
+- Now use details mentioned above in your webapp to connect mongodb
+
 
 ### flask package
 - `apt-get install python3-pip`
@@ -14,7 +40,6 @@ apt-get install mongodb
 ## Configuration
 
 ### mongodb
-- open 27017 port on mongodb-server, for webserver-ip if webserver hosted on another machine. `sudo ufw allow from <webserver-ip>/32 to any port 27017`
 
 ### flask package
 - Add confidential config in `instance/config.py`. Do not commit this file. Common config can be ketp at `config.py`
@@ -61,7 +86,7 @@ apt-get install mongodb
     ```
 
 - /inventory/getInventory
-    ````
+    ```
     /GET
     Returns all items available to purchase
     ```
