@@ -16,6 +16,7 @@ from flask import Flask
 from flask_mongoengine import MongoEngine
 from app.inventory.models import Transaction, FPCredit
 from app.helpers import generate_transaction_id
+from mongoengine.errors import DoesNotExist
 
 # app and components initialization
 app = Flask(__name__, instance_relative_config=True)
@@ -28,8 +29,12 @@ def main():
     timestamp = datetime.datetime.now() - datetime.timedelta(hours=app.config["FP_CREDIT_DURATION_HOURS"], minutes=app.config["FP_CREDIT_DURATION_MINS"])
     fp_credit_users = FPCredit.objects(timestamp__lte=timestamp)
     for fp in fp_credit_users:
-        if fp.user.free_points >= int(app.config["FP_CREDIT_MAX_POINTS"]):
-            app.logger.info("Skipping user. Free points already reached to threshold %s" %(fp.user.username))
+        try:
+            if fp.user.free_points >= int(app.config["FP_CREDIT_MAX_POINTS"]):
+                app.logger.info("Skipping user. Free points already reached to threshold %s" %(fp.user.username))
+                fp.delete()
+                continue
+        except DoesNotExist:
             fp.delete()
             continue
 
