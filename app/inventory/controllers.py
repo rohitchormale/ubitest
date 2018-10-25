@@ -9,7 +9,7 @@ import datetime
 from flask import render_template, jsonify, request, flash
 from flask_login import current_user, login_required
 from app import app
-from app.helpers import generate_transaction_id
+from app.helpers import generate_transaction_id, flash_errors
 from .models import Inventory, Transaction, FPCredit
 from .forms import AddInventoryForm, PurchaseItemForm, PurchasePointsForm
 
@@ -54,11 +54,11 @@ def purchase_points():
         current_user.purchased_points += points
         try:
             current_user.save()
-            flash("Vola !!! Let's spend some money")
+            flash("Richie !!! Let's spend some money")
         except Exception as e:
             flash("Please try again after sometime")
-
-    flash(form.errors)
+    else:
+        flash_errors(form)
     return render_template("points.html", user=current_user, form=form)
 
 
@@ -114,8 +114,8 @@ def purchase_item():
             print(e)
             flash("Sorry !!! Please try after sometime !!!")
             return render_template("items.html", inventory=Inventory.objects.all(), form=form)
-
-    flash(form.errors)
+    else:
+        flash_errors(form)
     return render_template("items.html", inventory=Inventory.objects.all(), form=form)
 
 
@@ -151,8 +151,8 @@ def add_inventory():
         points = int(form.points.data)
         if name is not None and points is not None:
             Inventory.objects(name=name).modify(upsert=True, new=True, set__points=points)
-
-    flash(form.errors)
+    else:
+        flash_errors(form)
     return render_template("inventory.html", inventory=Inventory.objects.all(), form=form)
 
 

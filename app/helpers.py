@@ -9,6 +9,7 @@ import json
 import datetime
 import uuid
 from bson.objectid import ObjectId
+from flask import flash
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -24,3 +25,12 @@ class JSONEncoder(json.JSONEncoder):
 def generate_transaction_id():
     return str(uuid.uuid4())
 
+
+def flash_errors(form):
+    """Flashes form errors"""
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ), 'error')

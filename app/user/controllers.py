@@ -13,6 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import login_manager
 from app import app
 from flask_login import current_user, login_user, login_required, logout_user
+from app.helpers import flash_errors
 from .forms import *
 from .models import *
 
@@ -49,7 +50,8 @@ def register():
                 fp_credit.save()
         return redirect(url_for("inventory.dashboard"))
 
-    flash(form.errors)
+    else:
+        flash_errors(form)
     return render_template("register.html", form=form)
 
 
@@ -63,12 +65,14 @@ def login():
         user = User.objects(username=form.username.data).first()
         if user is None:
             flash("Invalid username/password")
+            return render_template('login.html', form=form)
+
         if check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for("inventory.dashboard"))
         return render_template('login.html', form=form)
-
-    flash(form.errors)
+    else:
+        flash_errors(form)
     return render_template('login.html', form=form)
 
 

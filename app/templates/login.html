@@ -18,14 +18,10 @@
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
-                {%for m in message %}
-                    {% for e in message[m] %}
-                        <div class="alert alert-warning alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        {{ m }} - {{ e }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
+                <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
             {% endfor %}
             {% endif %}
             {% endwith %}
@@ -36,13 +32,16 @@
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="password" required>
 
+        <!--
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
-      </div>
+      </div> -->
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br>
+       <a href="/user/register">Not registered ?</a>
       <p class="mt-5 mb-3 text-muted">Made with Love !!!<p>
     </form>
   </body>

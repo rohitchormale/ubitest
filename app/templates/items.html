@@ -38,22 +38,18 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 overlay">
 
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-                {%for m in message %}
-                    {% for e in message[m] %}
-                        <div class="alert alert-warning alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        {{ m }} - {{ e }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
 
-         <form class="form-inline" method="post" action="/inventory/purchaseItems">
+         <form class="form-inline" method="post" action="/inventory/purchaseItem">
             {{ form.csrf_token }}
             <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="Item Name">
            <button class="btn btn-success mb-2" type="submit">Purchase Items</button>

@@ -15,20 +15,17 @@
         {{ form.csrf_token }}
       <h1 class="h3 mb-3 font-weight-normal">Register</h1>
 
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      {% for message in messages %}
-      {%for m in message %}
-      {% for e in message[m] %}
-      <div class="alert alert-warning alert-dismissible">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        {{ m }} - {{ e }}
-      </div>
-      {% endfor %}
-      {% endfor %}
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
 
       <label for="inputFirstname" class="sr-only"></label>
       <input type="text" id="inputFirstname" class="form-control" name="first_name" placeholder="First Name" required autofocus>
@@ -43,8 +40,9 @@
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="password" required>
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <br>
+       <a href="/user/login">Already have account ?</a>
       <p class="mt-5 mb-3 text-muted">Made with Love !!!<p>
-
 
     </form>
   </body>
