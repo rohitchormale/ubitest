@@ -17,7 +17,8 @@ from .forms import AddInventoryForm, PurchaseItemForm, PurchasePointsForm
 @login_required
 def dashboard():
     """Dashboard for user"""
-    return render_template('dashboard.html', user=current_user, inventory=get_inventory_aggregate())
+    transactions = Transaction.objects(user=current_user._get_current_object()).order_by("-timestamp")
+    return render_template('dashboard.html', user=current_user, inventory=get_inventory_aggregate(), transactions=transactions)
 
 
 @login_required
@@ -56,6 +57,8 @@ def purchase_points():
             flash("Vola !!! Let's spend some money")
         except Exception as e:
             flash("Please try again after sometime")
+
+    flash(form.errors)
     return render_template("points.html", user=current_user, form=form)
 
 
@@ -112,6 +115,7 @@ def purchase_item():
             flash("Sorry !!! Please try after sometime !!!")
             return render_template("items.html", inventory=Inventory.objects.all(), form=form)
 
+    flash(form.errors)
     return render_template("items.html", inventory=Inventory.objects.all(), form=form)
 
 
@@ -147,6 +151,8 @@ def add_inventory():
         points = int(form.points.data)
         if name is not None and points is not None:
             Inventory.objects(name=name).modify(upsert=True, new=True, set__points=points)
+
+    flash(form.errors)
     return render_template("inventory.html", inventory=Inventory.objects.all(), form=form)
 
 

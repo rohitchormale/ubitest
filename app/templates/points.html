@@ -1,39 +1,95 @@
-{% from "_formhelpers.html" import render_field %}
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Purchase Points</title>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inventory</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/inventory/dashboard">UBITest </a>
+      <input class="form-control form-control-dark w-100" type="label" value="Purchase Points (For Testing Only)">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="/user/logout">Log out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+
+              <li class="nav-item">
+                <a class="nav-link active" href="/inventory/dashboard">
+                  <span data-feather="home"></span>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 overlay">
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                {%for m in message %}
+                    {% for e in message[m] %}
+                        <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{ m }} - {{ e }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+         <form class="form-inline" method="post" action="/inventory/purchasePoints">
+            {{ form.csrf_token }}
+            <input type="text" class="form-control mb-2 mr-sm-2" name="points" placeholder="Points">
+           <button class="btn btn-success mb-2" type="submit">Purchase Points</button>
+          </form>
+
+          <br/><br/>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+
+              <thead>
+                <tr>
+                  <th>Free Points</th>
+                  <th>Purchased Points</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>{{ user.free_points }}</td>
+                  <td>{{ user.purchased_points }} </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </main>
+
+      </div>
+    </div>
 
 
-<h2> Purchase Points </h2>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-    {% for message in messages %}
-        <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-
-<form method="post" action="/inventory/purchasePoints">
-    {{ form.csrf_token }}
-    <dl>
-        {{ render_field(form.points) }}
-    </dl>
-    <p><input type="submit" value="Purchase"></p>
-</form>
-
-<hr>
-<h2>Current Points</h2>
-    <p>Free Points - {{ current_user.free_points }} </p>
-    <p>Purchased Points - {{ current_user.purchased_points }}</p>
-
-<hr>
-<a href="/inventory/dashboard">Dashboard</a>
-
-</body>
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+  </body>
 </html>
-

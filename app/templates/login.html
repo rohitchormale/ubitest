@@ -1,32 +1,49 @@
-{% from "_formhelpers.html" import render_field %}
-<html>
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login</title>
-</head>
-<body>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/login.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+  <body class="text-center">
+    <form class="form-signin" method="post" action="/user/login">
+        {{ form.csrf_token }}
+      <h1 class="h3 mb-3 font-weight-normal">Login</h1>
 
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                {%for m in message %}
+                    {% for e in message[m] %}
+                        <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{ m }} - {{ e }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
 
-<h2> Login </h2>
+      <label for="inputUsername" class="sr-only"></label>
+      <input type="text" id="inputUsername" class="form-control" name="username" placeholder="username" required autofocus>
 
-<form method="post" action="/user/login">
-    {{ form.csrf_token }}
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-    <p><input type=submit value=Login>
-    <a href="/user/register">Register</a>
-</form>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="password" required>
 
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
 
-</body>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">Made with Love !!!<p>
+    </form>
+  </body>
 </html>

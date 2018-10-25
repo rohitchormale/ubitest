@@ -1,37 +1,51 @@
-{% from "_formhelpers.html" import render_field %}
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/login.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
 
-<h3> Registration </h3>
+  <body class="text-center">
+    <form class="form-signin" method="post" action="/user/register">
+        {{ form.csrf_token }}
+      <h1 class="h3 mb-3 font-weight-normal">Register</h1>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      {%for m in message %}
+      {% for e in message[m] %}
+      <div class="alert alert-warning alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ m }} - {{ e }}
+      </div>
+      {% endfor %}
+      {% endfor %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <label for="inputFirstname" class="sr-only"></label>
+      <input type="text" id="inputFirstname" class="form-control" name="first_name" placeholder="First Name" required autofocus>
+
+      <label for="inputLastname" class="sr-only"></label>
+      <input type="text" id="inputLastname" class="form-control" name="last_name" placeholder="Last Name" required autofocus>
+
+      <label for="inputUsername" class="sr-only"></label>
+      <input type="text" id="inputUsername" class="form-control" name="username" placeholder="username" required autofocus>
+
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="password" required>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <p class="mt-5 mb-3 text-muted">Made with Love !!!<p>
 
 
-<form method="post" action="/user/register">
-    {{ form.csrf_token }}
-  <dl>
-    {{ render_field(form.first_name) }}
-    {{ render_field(form.last_name) }}
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-  </dl>
-  <p><input type=submit value=Register>
-    <a href="/user/login">Already registered?</a>
-</form>
-
-
-
-</body>
+    </form>
+  </body>
 </html>

@@ -48,6 +48,8 @@ def register():
                 fp_credit = FPCredit(user=current_user._get_current_object(), timestamp=datetime.datetime.now())
                 fp_credit.save()
         return redirect(url_for("inventory.dashboard"))
+
+    flash(form.errors)
     return render_template("register.html", form=form)
 
 
@@ -65,6 +67,8 @@ def login():
             login_user(user)
             return redirect(url_for("inventory.dashboard"))
         return render_template('login.html', form=form)
+
+    flash(form.errors)
     return render_template('login.html', form=form)
 
 
