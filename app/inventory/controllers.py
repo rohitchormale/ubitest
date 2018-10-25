@@ -55,6 +55,8 @@ def purchase_points():
         try:
             current_user.save()
             flash("Richie !!! Let's spend some money")
+            trans_pp = Transaction(user=current_user._get_current_object(), trans_type="PP", trans_id=generate_transaction_id(), points=points, description="Purchased %s points" % points, timestamp=datetime.datetime.now())
+            trans_pp.save()
         except Exception as e:
             flash("Please try again after sometime")
     else:
