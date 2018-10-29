@@ -1,134 +1,92 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
-    <link href="/static/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/dashboard.css" rel="stylesheet">
-  </head>
-
-  <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/inventory/dashboard">UBITest </a>
-      <input class="form-control form-control-dark w-100" type="label" value="Bonjour, {{ user.first_name.title() }} ! Are you ready ? ">
-      {% if user.admin %}
-      <a class="btn btn-info" href="/inventory/addInventory">Inventory Management</a>
-      {% endif %}
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="/user/logout">Log out</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="container-fluid">
+{% extends 'base.html'%}
+{% block title %}Dashboard {% endblock %}
+{% block content %}
+    <div id="page-wrapper">
       <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
+        <div class="col-lg-12">
+          <h1 class="page-header">Dashboard</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+      </div>
+      <!-- /.row -->
 
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home"></span>
-                  Dashboard <span class="sr-only">(current)</span>
-                </a>
-              </li>
-            </ul>
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6">
+          <div class="panel panel-green">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-usd fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ user.purchased_points }}</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="/inventory/purchasePoints">
+              <div class="panel-footer">
+                <span class="pull-left">Purchased Points</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+              </div>
+            </a>
+
+         </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="panel panel-yellow">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-gift fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ user.free_points }}</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="#">
+              <div class="panel-footer">
+                <span class="pull-left">Free Points</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+              </div>
+            </a>
 
           </div>
-        </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 overlay" id="dashboardSection">
+        </div>
 
 
-          <h3>Points <a class="btn btn-success" href="/inventory/purchasePoints" role="button">Buy Points</a> </h3>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
+        <div class="col-lg-3 col-md-6">
+          <div class="panel panel-red">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-support fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ inventory.values() | sum }}</div>
+                </div>
+              </div>
+            </div>
 
-              <thead>
-                <tr>
-                  <th>Free Points</th>
-                  <th>Purchased Points</th>
-                </tr>
-              </thead>
+            <a href="/inventory/purchaseItem">
+              <div class="panel-footer">
+                <span class="pull-left">Inventory Items</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+              </div>
+            </a>
 
-              <tbody>
-                <tr>
-                  <td>{{ user.free_points }}</td>
-                  <td>{{ user.purchased_points }} </td>
-                </tr>
-
-              </tbody>
-            </table>
           </div>
-
-          <br/>
-          <br/>
-          <h3>Items <a class="btn btn-success" href="/inventory/purchaseItem" role="button">Buy Items</a>  </h3>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-
-              <thead>
-                <tr>
-                  <th>Name </th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {% for i in inventory %}
-                <tr>
-                  <td>{{ i }}</td>
-                  <td>{{ inventory[i] }} </td>
-                </tr>
-                {% endfor %}
-
-              </tbody>
-            </table>
-          </div>
-
-
-
-          <h3>Transactions </h3>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-
-              <thead>
-                <tr>
-                  <th>Id </th>
-                  <th>Type </th>
-                  <th>Points</th>
-                  <th>Description</th>
-                  <th>Timestamp</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {% for t in transactions %}
-                <tr>
-                  <td>{{ t.trans_id }}</td>
-                  <td>{{ t.trans_type }} </td>
-                  <td>{{ t.points }} </td>
-                  <td>{{ t.description }} </td>
-                  <td>{{ t.timestamp }} </td>
-                </tr>
-                {% endfor %}
-
-              </tbody>
-            </table>
-          </div>
-
-        </main>
+        </div>
 
       </div>
-    </div>
 
-
-    <!-- Icons -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-      feather.replace()
-    </script>
-  </body>
-</html>
+      </div>
+      <!-- /.row -->
+{% endblock %}

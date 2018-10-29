@@ -73,13 +73,13 @@ def purchase_item():
         inventory = Inventory.objects(name=name).first()
         if inventory is None:
             flash("Sorry !!! Item is not available anymore.")
-            return render_template("items.html", inventory=Inventory.objects.all(), form=form)
+            return render_template("items.html", inventory=Inventory.objects.all(), form=form, user=current_user, items=get_inventory_aggregate())
 
         price = inventory.points
         # discard if not enough balance
         if price > (current_user.free_points + current_user.purchased_points):
             flash("Not enough balance")
-            return render_template("items.html", inventory=Inventory.objects.all(), form=form)
+            return render_template("items.html", inventory=Inventory.objects.all(), form=form, user=current_user, items=get_inventory_aggregate())
 
         trans_fp = None
         trans_pp = None
@@ -115,10 +115,10 @@ def purchase_item():
         except Exception as e:
             print(e)
             flash("Sorry !!! Please try after sometime !!!")
-            return render_template("items.html", inventory=Inventory.objects.all(), form=form)
+            return render_template("items.html", inventory=Inventory.objects.all(), form=form, user=current_user, items=get_inventory_aggregate())
     else:
         flash_errors(form)
-    return render_template("items.html", inventory=Inventory.objects.all(), form=form)
+    return render_template("items.html", inventory=Inventory.objects.all(), form=form, user=current_user, items=get_inventory_aggregate())
 
 
 @login_required
@@ -168,3 +168,14 @@ def get_transactions():
         return jsonify(transactions), 200
     transactions = Transaction.objects(user=current_user._get_current_object()).skip(int(offset)).limit(int(limit)).order_by("-timestamp")
     return jsonify(transactions), 200
+
+@login_required
+def manage_transactions():
+    """Render transaction portal"""
+    offset = request.args.get("offset", None)
+    limit = request.args.get("limit", None)
+    if offset is None or limit is None:
+        transactions = Transaction.objects(user=current_user._get_current_object()).order_by("-timestamp")
+        return render_template("transactions.html", transactions=transactions, user=current_user)
+    transactions = Transaction.objects(user=current_user._get_current_object()).skip(int(offset)).limit(int(limit)).order_by("-timestamp")
+    return render_template("transactions.html", transactions=transactions, user=current_user)

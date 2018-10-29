@@ -24,5 +24,6 @@ inventory_blueprint.add_url_rule('addInventory', 'addInventory', add_inventory, 
 
 
 inventory_blueprint.add_url_rule('getTransactions', 'getTransactions', get_transactions, methods=["GET",])
+inventory_blueprint.add_url_rule('manageTransactions', 'manageTransactions', manage_transactions, methods=["GET",])
 
 
